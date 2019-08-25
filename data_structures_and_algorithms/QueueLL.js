@@ -1,3 +1,6 @@
+/**
+ * Linked list node data structure
+ */
 class Node {
   constructor(data) {
     this.data = data;
@@ -5,6 +8,9 @@ class Node {
   }
 }
 
+/**
+ * Queue implementation using linked list.
+ */
 class QueueLL {
   constructor() {
     this.first = null;
