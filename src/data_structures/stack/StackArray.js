@@ -17,7 +17,7 @@ class StackArray {
 
   push(item) {
     this.a[this.n] = item; 
-    this.n++;
+    this.n += 1;
   }
 
   pop() {
@@ -27,7 +27,7 @@ class StackArray {
 
     const item = this.a[this.n-1];
     this.a[this.n-1] = null;
-    this.n--;  
+    this.n -= 1;  
     return item;
   }
 
@@ -36,24 +36,25 @@ class StackArray {
   }
 
   [Symbol.iterator]() {
-    const a = this.a;
-    let index = this.n-1;
+    const {a} = this;
+    let index = this.n;
 
     return {
       next() {
+        index -= 1;
+
         if (index < 0) {
           return {done: true}; // end of iteration
         }
 
         return {
-          value: a[index--],
+          value: a[index],
           done: false,
         };
       }
     }
   }
 }
-
 
 (function run() {
   const stack = new StackArray();

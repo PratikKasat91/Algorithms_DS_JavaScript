@@ -23,9 +23,10 @@ class ResizingStackArray {
   }
 
   resize(capacity) {
-    let temp = new Array(capacity);
+    const normalizedCapacity = Math.floor(capacity);
+    const temp = new Array(normalizedCapacity);
 
-    for (let i = 0; i < this.n; i++) {
+    for (let i = 0; i < this.n; i += 1) {
       temp[i] = this.a[i];
     }
 
@@ -46,7 +47,7 @@ class ResizingStackArray {
     }
 
     this.a[this.n] = item;
-    this.n++;
+    this.n += 1;
   }
 
   pop() {
@@ -56,9 +57,9 @@ class ResizingStackArray {
 
     const item = this.a[this.n - 1];
     this.a[this.n - 1] = null;
-    this.n--;
+    this.n -= 1;
 
-    if (this.n > 0 && this.n === this.length / 4) {
+    if (this.n > 0 && this.n === Math.floor(this.length / 4)) {
       // shrink the size of array when it is one-quarter full
       this.resize(this.length / 2);
     }
@@ -71,17 +72,19 @@ class ResizingStackArray {
   }
 
   [Symbol.iterator]() {
-    const a = this.a;
-    let index = this.n - 1;
+    const {a} = this;
+    let index = this.n;
 
     return {
       next() {
+        index -= 1;
+
         if (index < 0) {
           return { done: true }; // end of iteration
         }
 
         return {
-          value: a[index--],
+          value: a[index],
           done: false,
         };
       },

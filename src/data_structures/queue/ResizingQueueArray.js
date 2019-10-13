@@ -28,9 +28,10 @@ class ResizingQueueArray {
   }
 
   resize(capacity) {
-    let temp = new Array(capacity); // length illusion
+    const normalizedCapacity = Math.floor(capacity);
+    const temp = new Array(normalizedCapacity); // length illusion
 
-    for (let i = 0; i < this.n; i++ ) {
+    for (let i = 0; i < this.n; i += 1) {
       const index = (i + this.first) % this._length;
       temp[i] = this.q[index];
     }
@@ -49,13 +50,13 @@ class ResizingQueueArray {
     } 
 
     this.q[this.last] = item;
-    this.last++;
+    this.last += 1;
 
     if (this.last === this.length) {
       this.last = 0; // wrap around
     }
 
-    this.n++;
+    this.n += 1;
   }
 
   dequeue() {
@@ -65,14 +66,14 @@ class ResizingQueueArray {
 
     const item = this.q[this.first];
     this.q[this.first] = null;
-    this.first++;
-    this.n--;
+    this.first += 1;
+    this.n -= 1;
 
     if (this.isEmpty()) {
       this.first = 0; // wrap around
     }
 
-    if (this.n > 0 && this.n === this.length / 4) {
+    if (this.n > 0 && this.n === Math.floor(this.length / 4)) {
       this.resize(this.length / 2);
     }
 
@@ -81,19 +82,16 @@ class ResizingQueueArray {
 
   [Symbol.iterator]() {
     let i = 0;
-    let first = this.first;
-    let n = this.n;
-    let length = this.length;
-    let q = this.q;
+    const {first, n, length, q} = this;
 
     return {
       next() {
-        if (i >= n) {
+        if (i === n) {
           return {done: true}; // end of iteration
         }
 
         const index = (first + i) % length;
-        i++;
+        i += 1;
 
         return {
           value: q[index],

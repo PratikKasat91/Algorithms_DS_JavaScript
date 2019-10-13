@@ -1,12 +1,4 @@
-/**
- * Linked list node data structure
- */
-class Node {
-  constructor(data) {
-    this.data = data;
-    this.next = null;
-  }
-}
+const Node = require('./LinkedListNode');
 
 /**
  * Stack implementation using linked list.
@@ -29,7 +21,7 @@ class StackLL {
     const oldFirst = this.first;
     this.first = new Node(item);
     this.first.next = oldFirst;
-    this.n++;
+    this.n += 1;
   }
 
   pop() {
@@ -40,7 +32,7 @@ class StackLL {
     const item = this.first;
     this.first = this.first.next;
     item.next = null;
-    this.n--;
+    this.n -= 1;
     return item;
   }
 

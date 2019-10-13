@@ -10,7 +10,7 @@ class QueueArray {
   }
 
   isEmpty() {
-    this.n === 0;
+    return this.n === 0;
   }
 
   size() {
@@ -19,8 +19,8 @@ class QueueArray {
 
   enqueue(item) {
     this.q[this.last] = item;
-    this.last++;
-    this.n++;
+    this.last += 1;
+    this.n += 1;
   }
 
   dequeue() {
@@ -30,8 +30,8 @@ class QueueArray {
 
     const item = this.q[this.first];
     this.q[this.first] = null;
-    this.first++;
-    this.n--;
+    this.first += 1;
+    this.n -= 1;
   
     return item;
   }
@@ -45,19 +45,17 @@ class QueueArray {
   }
 
   [Symbol.iterator]() {
-    let first = this.first;
-    let last = this.last;
-    let n = this.n;
-    let q = this.q;
+    const {first, last, q}= this;
+    let i = first;
 
     return {
       next() {
-        if (first === last) {
+        if (i === last) {
           return {done: true}; // end of iteration
         }
 
-        let value = q[first];
-        first = first + 1;
+        const value = q[i];
+        i += 1;
 
         return {
           value,

@@ -1,12 +1,4 @@
-/**
- * Linked list node data structure
- */
-class Node {
-  constructor(data) {
-    this.data = data;
-    this.next = null;
-  }
-}
+const Node = require('./LinkedListNode');
 
 /**
  * Queue implementation using linked list.
@@ -36,7 +28,7 @@ class QueueLL {
       oldLast.next = this.last;
     }
 
-    this.n++;
+    this.n+=1;
   }
 
   dequeue() {
@@ -47,7 +39,7 @@ class QueueLL {
     const item = this.first;
     this.first = this.first.next;
     item.next = null;
-    this.n--;
+    this.n-=1;
 
     if (this.isEmpty()) {
       this.last = null;
@@ -57,16 +49,17 @@ class QueueLL {
   }
 
   [Symbol.iterator]() {
-    let first = this.first;
+    const {first} = this;
+    let current = first;
 
     return {
       next() {
-        if (first === null) {
+        if (current === null) {
           return {done: true}; // end of iteration
         }
 
-        const value = first.data;
-        first = first.next;
+        const value = current.data;
+        current = current.next;
 
         return {
           value,
